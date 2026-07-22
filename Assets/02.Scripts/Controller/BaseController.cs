@@ -17,9 +17,12 @@ public class BaseController : MonoBehaviour
     private float _knockbackDuration = 0f;
     private float moveSpeed = 5f;
 
+    protected AnimationHandler animationHandler;
+
     protected virtual void Awake()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
+        animationHandler = GetComponent<AnimationHandler>();
 
     }
 
@@ -52,6 +55,7 @@ public class BaseController : MonoBehaviour
         }
 
         rigidbody2D.velocity = dir;
+        animationHandler.Move(dir);
     }
 
     private void Rotate(Vector2 dir)
