@@ -15,15 +15,14 @@ public class BaseController : MonoBehaviour
 
     private Vector2 _knockbackDirection = Vector2.zero;
     private float _knockbackDuration = 0f;
-    private float moveSpeed = 5f;
 
     protected AnimationHandler animationHandler;
-
+    protected StatHandler statHandler;
     protected virtual void Awake()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
         animationHandler = GetComponent<AnimationHandler>();
-
+        statHandler = GetComponent<StatHandler>();
     }
 
     protected virtual void Start()
@@ -46,7 +45,7 @@ public class BaseController : MonoBehaviour
     {
         if (rigidbody2D == null) return;
 
-        dir = dir * moveSpeed;
+        dir = dir * statHandler.MoveSpeed;
         //Apply Knockback
         if (_knockbackDuration > 0.0f)
         {
