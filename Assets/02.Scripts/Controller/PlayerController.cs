@@ -30,6 +30,13 @@ public class PlayerController : BaseController
         {
             lookDirection = lookDirection.normalized;
         }
-        Debug.Log(lookDirection);
+    }
+
+    public void OnAttack(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            isAttacking = true;
+        else if(context.canceled)
+            isAttacking = false;
     }
 }

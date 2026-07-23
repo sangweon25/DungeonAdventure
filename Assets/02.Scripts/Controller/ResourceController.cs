@@ -14,9 +14,9 @@ public class ResourceController : MonoBehaviour
 
     private void Awake()
     {
-        BaseController controller = GetComponent<BaseController>();
-        StatHandler statHandler = GetComponent<StatHandler>();
-        AnimationHandler animationHandler = GetComponent<AnimationHandler>();
+        _controller = GetComponent<BaseController>();
+        _statHandler = GetComponent<StatHandler>();
+        _animationHandler = GetComponent<AnimationHandler>();
     }
 
     private void Start()

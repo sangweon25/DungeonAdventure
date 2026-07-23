@@ -3044,6 +3044,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterRenderer: {fileID: 1657481017}
   weaponPivot: {fileID: 445066637}
+  _weaponPrefab: {fileID: 6262327145754710507, guid: b8d6a7302262dd34b86a4c8248371bf6, type: 3}
 --- !u!114 &385785440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3101,6 +3102,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 145a346d-9f1e-451f-a698-2652ce9602a5
     m_ActionName: Player/Rotate[/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 385785439}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 4d776576-c859-4307-bac2-f05bb1ec1baf
+    m_ActionName: Player/Attack
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -3144,6 +3161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c21c098aea18a7846bc5e3686a59be6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _healthchangeDelay: 0.5
 --- !u!1 &445066636
 GameObject:
   m_ObjectHideFlags: 0
