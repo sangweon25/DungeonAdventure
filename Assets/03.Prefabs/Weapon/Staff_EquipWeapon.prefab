@@ -190,7 +190,7 @@ MonoBehaviour:
   _atkRange: 10
   target:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   _isOnKnockback: 1
   _knockbackPower: 0.1
   _knockbackTIme: 0.5

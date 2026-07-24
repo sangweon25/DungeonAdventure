@@ -25,14 +25,13 @@ public class WeaponHandler : MonoBehaviour
     public bool IsOnKnockback { get => IsOnKnockback; set => IsOnKnockback = value; }
 
     [SerializeField] private float _knockbackPower = 0.1f;
-    public float KnockbackPower { get => _knockbackPower; set => _knockbackPower = value;}
+    public float KnockbackPower { get => _knockbackPower; set => _knockbackPower = value; }
 
     [SerializeField] private float _knockbackTIme = 0.5f;
 
-    public float KnockbackTime {  get => _knockbackTIme; set => _knockbackTIme = value;}
+    public float KnockbackTime { get => _knockbackTIme; set => _knockbackTIme = value; }
 
     private static readonly int IsAttack = Animator.StringToHash("IsAttack");
-
 
     public BaseController Controller { get; private set; }
     private Animator _animator;
@@ -56,7 +55,6 @@ public class WeaponHandler : MonoBehaviour
 
     public virtual void Attack()
     {
-        Debug.Log("IsAttack");
         AttackAnimation();
     }
 
@@ -65,8 +63,12 @@ public class WeaponHandler : MonoBehaviour
         _animator.SetTrigger(IsAttack);
     }
 
-    public virtual void Rotate(bool isLeft)
+    public virtual void FlipWeapon(bool isLeft)
     {
-        _weaponRenderer.flipY = isLeft;
+        Vector3 scale = transform.localScale;
+        //isLeft라면 y축 기준 Flip
+        scale.y = Mathf.Abs(transform.localScale.y) * (isLeft ? -1f : 1f);
+
+        transform.localScale = scale;
     }
 }

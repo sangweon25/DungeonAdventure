@@ -27,6 +27,13 @@ public class RangeWeapon : WeaponHandler
     [SerializeField] private Color _projectileColor;
     public Color ProjectileColor { get { return _projectileColor; } }
 
+    private ProjectileManager _projectileManager;
+    protected override void Start()
+    {
+        base.Start();
+        _projectileManager = ProjectileManager.Instance;
+    }
+
     public override void Attack()
     {
         base.Attack();
@@ -47,7 +54,10 @@ public class RangeWeapon : WeaponHandler
 
     private void CreateProjectile(Vector2 lookDir, float angle)
     {
-
+        _projectileManager.ShootBullet(
+            this,
+            _projectileSpawnPos.position,
+            RotateVector2(lookDir,angle));
     }
 
     private static Vector2 RotateVector2(Vector2 vec, float degree)
