@@ -17,6 +17,8 @@ public class ProjectileController : MonoBehaviour
 
     public bool fxOnDestroy = true;
 
+    private ProjectileManager _projectileManager;
+
     private void Awake()
     {
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -50,8 +52,9 @@ public class ProjectileController : MonoBehaviour
         }
     }
 
-    public void Init(Vector2 dir, RangeWeapon rangeWeapon)
+    public void Init(Vector2 dir, RangeWeapon rangeWeapon, ProjectileManager projectileManager)
     {
+        this._projectileManager = projectileManager;
         _rangeWeapon = rangeWeapon;
 
         this._direction = dir;
@@ -71,6 +74,10 @@ public class ProjectileController : MonoBehaviour
 
     private void DestroyProjectile(Vector3 position, bool createFx)
     {
+        if (createFx)
+        {
+            _projectileManager.CreateImpactParticleAtPosition(position,_rangeWeapon);
+        }
         Destroy(this.gameObject);
     }
 }
