@@ -47,6 +47,7 @@ public class BaseController : MonoBehaviour
 
     protected virtual void Update()
     {
+        HandlerAction();
         Rotate(lookDirection);
         AttackDelay();
     }
@@ -55,6 +56,12 @@ public class BaseController : MonoBehaviour
     {
         Movement(movementDirection);
         if (_knockbackDuration > 0f) _knockbackDuration -= Time.fixedDeltaTime;
+    }
+
+
+    protected virtual void HandlerAction()
+    {
+
     }
 
     private void Movement(Vector2 dir)
