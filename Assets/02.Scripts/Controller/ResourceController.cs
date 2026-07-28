@@ -44,15 +44,13 @@ public class ResourceController : MonoBehaviour
         }
 
         _timeSinceLastChange = 0f;
-        CurrentHealth += health;
-        CurrentHealth = CurrentHealth > MaxHealth ? MaxHealth : CurrentHealth;
-        CurrentHealth = CurrentHealth < 0 ? 0 : CurrentHealth;
+        CurrentHealth = Mathf.Clamp(CurrentHealth + health, 0f, MaxHealth);
         if (health < 0)
         {
             _animationHandler.Damage();
         }
 
-        if (CurrentHealth < 0f)
+        if (CurrentHealth <= 0f)
         {
             Death();
         }

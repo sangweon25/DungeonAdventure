@@ -14,10 +14,14 @@ public class RangeWeapon : WeaponHandler
 
     [SerializeField] private float _duration;
     public float Duration { get { return _duration; } }
-
+    /// <summary>
+    /// 탄퍼짐 각
+    /// </summary>
     [SerializeField] private float _spread;
     public float Spread { get { return _spread; } }
-
+    /// <summary>
+    /// 1회 공격당 발사체 갯수
+    /// </summary>
     [SerializeField] private int _projectiledNumPerShot;
     public int ProjectileNumPerShot { get { return _projectiledNumPerShot; } }
 
@@ -40,15 +44,18 @@ public class RangeWeapon : WeaponHandler
 
         float projectileAngleSpace = MultipleProjectileAngle;
         int projectileNumPerShot = ProjectileNumPerShot;
-        //발사 최소각도
-        float minAngle = (projectileNumPerShot / 2f) * projectileAngleSpace;
+        //발사 시작 각도 (인덱스 0 ~ 1 사이 각)
+        float startAngle = -((projectileNumPerShot - 1) * projectileAngleSpace) / 2f;
 
         for (int i = 0; i < projectileNumPerShot; i++)
         {
-            float angle = minAngle + projectileAngleSpace * i;
-            float randomSpread = Random.Range(-_spread,_spread);
-            angle += randomSpread;
-            CreateProjectile(Controller.LookDirection,angle);
+            float angle = startAngle + projectileAngleSpace * i;
+
+            angle += Random.Range(-_spread, _spread);
+
+            CreateProjectile(
+                Controller.LookDirection,
+                angle);
         }
     }
 
@@ -57,11 +64,11 @@ public class RangeWeapon : WeaponHandler
         _projectileManager.ShootBullet(
             this,
             _projectileSpawnPos.position,
-            RotateVector2(lookDir,angle));
+            RotateVector2(lookDir, angle));
     }
 
     private static Vector2 RotateVector2(Vector2 vec, float degree)
     {
-        return Quaternion.Euler(0,0,degree) * vec;
+        return Quaternion.Euler(0, 0, degree) * vec;
     }
 }

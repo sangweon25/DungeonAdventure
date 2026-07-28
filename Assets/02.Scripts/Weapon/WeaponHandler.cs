@@ -22,7 +22,7 @@ public class WeaponHandler : MonoBehaviour
 
     [Header("Knockback")]
     [SerializeField] private bool _isOnKnockback = false;
-    public bool IsOnKnockback { get => IsOnKnockback; set => IsOnKnockback = value; }
+    public bool IsOnKnockback { get => _isOnKnockback; set => _isOnKnockback = value; }
 
     [SerializeField] private float _knockbackPower = 0.1f;
     public float KnockbackPower { get => _knockbackPower; set => _knockbackPower = value; }
