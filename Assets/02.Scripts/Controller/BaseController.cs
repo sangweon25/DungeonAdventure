@@ -124,4 +124,22 @@ public class BaseController : MonoBehaviour
         }
     }
 
+    public virtual void Death()
+    {
+        rigidbody2D.velocity = Vector3.zero;
+
+        foreach (SpriteRenderer renderer in transform.GetComponentsInChildren<SpriteRenderer>())
+        {
+            Color color = renderer.color;
+            color.a = 0.3f;
+            renderer.color = color;
+        }
+
+        foreach (Behaviour item in transform.GetComponentsInChildren<Behaviour>())
+        {
+            item.enabled = false;
+        }
+        Destroy(gameObject,2f);
+    }
+
 }

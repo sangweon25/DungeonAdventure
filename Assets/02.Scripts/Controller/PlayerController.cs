@@ -41,4 +41,10 @@ public class PlayerController : BaseController
         else if(context.canceled)
             isAttacking = false;
     }
+
+    public override void Death()
+    {
+        base.Death();
+        _gameManager.GameOver();
+    }
 }

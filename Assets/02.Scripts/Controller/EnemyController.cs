@@ -61,6 +61,10 @@ public class EnemyController : BaseController
             movementDirection = direction;
         }
     }
-
+    public override void Death()
+    {
+        base.Death();
+        _enemyManager.RemoveEnemyOnDeath(this);
+    }
 
 }

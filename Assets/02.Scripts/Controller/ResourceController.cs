@@ -59,6 +59,6 @@ public class ResourceController : MonoBehaviour
 
     private void Death()
     {
-
+        _controller.Death();
     }
 }

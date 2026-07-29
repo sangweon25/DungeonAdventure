@@ -63,7 +63,7 @@ public class EnemyManager : MonoBehaviour
             Debug.Log("Enemy Prfeabs or spawnAreas count zero");
             return;
         }
-        GameObject randomPrefab = _enemyPrefabs[Random.Range(0,_enemyPrefabs.Count)];
+        GameObject randomPrefab = _enemyPrefabs[Random.Range(0, _enemyPrefabs.Count)];
 
         Rect randomArea = _spawnAreas[Random.Range(0, _spawnAreas.Count)];
 
@@ -71,8 +71,9 @@ public class EnemyManager : MonoBehaviour
             Random.Range(randomArea.xMin, randomArea.xMax),
             Random.Range(randomArea.yMin, randomArea.yMax));
 
-        GameObject spawnEnemy = Instantiate(randomPrefab, new Vector3(randomPosition.x, randomPosition.y),Quaternion.identity);
+        GameObject spawnEnemy = Instantiate(randomPrefab, new Vector3(randomPosition.x, randomPosition.y), Quaternion.identity);
         EnemyController enemyController = spawnEnemy.GetComponent<EnemyController>();
+        enemyController.Init(this,_gameManager.playerController.transform);
 
         _activeEnemies.Add(enemyController);
     }
@@ -84,10 +85,18 @@ public class EnemyManager : MonoBehaviour
         foreach (var area in _spawnAreas)
         {
             Vector3 center = new Vector3(area.x + area.width / 2, area.y + area.height / 2);
-            Vector3 size = new Vector3(area.width,area.height);
+            Vector3 size = new Vector3(area.width, area.height);
             Debug.Log($"center {center} size : {size}");
-            Gizmos.DrawCube(center,size);
+            Gizmos.DrawCube(center, size);
         }
     }
 
+    public void RemoveEnemyOnDeath(EnemyController enemy)
+    {
+        _activeEnemies.Remove(enemy); 
+        if (_enemySpawnComplete && _activeEnemies.Count == 0)
+        {
+            _gameManager.EndOfWave();
+        }
+    }
 }
