@@ -180,7 +180,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7939966510823419821}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b8501ba07832cb4187a5cd26397d4a3, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d1927c559e44f94a8b240d78b3e5a62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _delay: 3
@@ -202,3 +202,6 @@ MonoBehaviour:
   _projectiledNumPerShot: 1
   _multipleProjectileAngle: 1
   _projectileColor: {r: 1, g: 1, b: 1, a: 1}
+  _targetRandomRect: {x: 1, y: 1}
+  _explosionDelay: 1
+  _explosionRadius: 2

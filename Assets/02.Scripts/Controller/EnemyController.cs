@@ -4,6 +4,7 @@ public class EnemyController : BaseController
 {
     private EnemyManager _enemyManager;
     private Transform _target;
+    public Transform Target => _target;
 
     [SerializeField] private float _followRange = 15f;
 

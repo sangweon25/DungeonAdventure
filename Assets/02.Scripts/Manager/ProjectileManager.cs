@@ -25,6 +25,14 @@ public class ProjectileManager : MonoBehaviour
 
     }
 
+    public void ShootExplosive(ExplosiveRangeWeapon rangeWeapon, Vector2 startPos, Vector2 targetPos)
+    {
+        GameObject prefab = _projectilePrefabs[rangeWeapon.BulletIndex];
+        GameObject obj = Instantiate(prefab, startPos, Quaternion.identity);
+
+        ExplosiveProjectileController projectileController = obj.GetComponent<ExplosiveProjectileController>();
+        projectileController.Init(targetPos, rangeWeapon, this);
+    }
     public void CreateImpactParticleAtPosition(Vector3 pos,RangeWeapon rangeWeapon)
     {
         _impactParticleSystem.transform.position = pos;

@@ -1,10 +1,10 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class RangeWeapon : WeaponHandler
 {
     [Header("Range Attack")]
     [SerializeField] private Transform _projectileSpawnPos;
+    protected Transform ProjectileSpawnPos => _projectileSpawnPos;
 
     [SerializeField] private int _bulletIndex;
     public int BulletIndex { get { return _bulletIndex; } }
@@ -32,6 +32,7 @@ public class RangeWeapon : WeaponHandler
     public Color ProjectileColor { get { return _projectileColor; } }
 
     private ProjectileManager _projectileManager;
+    protected ProjectileManager ProjectileManagerInstance => _projectileManager;
     protected override void Start()
     {
         base.Start();
@@ -67,7 +68,7 @@ public class RangeWeapon : WeaponHandler
             RotateVector2(lookDir, angle));
     }
 
-    private static Vector2 RotateVector2(Vector2 vec, float degree)
+    protected static Vector2 RotateVector2(Vector2 vec, float degree)
     {
         return Quaternion.Euler(0, 0, degree) * vec;
     }
