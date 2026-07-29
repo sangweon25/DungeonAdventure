@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _delay: 3
-  _weaponSize: 1.5
+  _weaponSize: 1
   _atkPower: 0.1
   _atkSpeed: 3
   _atkRange: 15
