@@ -54,7 +54,7 @@ public class ProjectileController : MonoBehaviour
                 resourceController.ChangeHealth(-_rangeWeapon.AtkPower);
                 if (_rangeWeapon.IsOnKnockback)
                 {
-                    BaseController baseController = GetComponent<BaseController>();
+                    BaseController baseController = collision.GetComponent<BaseController>();
                     if (baseController != null)
                     {
                         baseController.ApplyKnockback(transform,_rangeWeapon.KnockbackPower, _rangeWeapon.KnockbackTime);

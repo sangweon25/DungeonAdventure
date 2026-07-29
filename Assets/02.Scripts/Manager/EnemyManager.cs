@@ -86,7 +86,6 @@ public class EnemyManager : MonoBehaviour
         {
             Vector3 center = new Vector3(area.x + area.width / 2, area.y + area.height / 2);
             Vector3 size = new Vector3(area.width, area.height);
-            Debug.Log($"center {center} size : {size}");
             Gizmos.DrawCube(center, size);
         }
     }

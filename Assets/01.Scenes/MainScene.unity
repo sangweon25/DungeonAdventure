@@ -167,8 +167,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyPrefabs:
-  - {fileID: 152932929555772193, guid: d8d121a4a5a41c842bab9a4bc0cb877a, type: 3}
   - {fileID: 4962732216761510038, guid: 7ecceb811e21d8e4c9466ed7cb74f2a5, type: 3}
+  - {fileID: 152932929555772193, guid: d8d121a4a5a41c842bab9a4bc0cb877a, type: 3}
   _spawnAreas:
   - serializedVersion: 2
     x: -9.23
@@ -14271,6 +14271,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _projectilePrefabs:
   - {fileID: 1966033678148965262, guid: cb80effec88a7a64787ef56b7491fc0c, type: 3}
+  - {fileID: 1966033678148965262, guid: 730881634fae06a40b35476b21caf609, type: 3}
   _impactParticleSystem: {fileID: 849005131}
 --- !u!1 &1657481015
 GameObject:
