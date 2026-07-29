@@ -18,31 +18,33 @@ public class ExplosiveProjectileController : MonoBehaviour
 
     [SerializeField] private float rotationSpeed = 360f;
 
+    public AudioClip explosiveSoundClip;
     private void Awake()
     {
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        _rigidbody = GetComponentInChildren<Rigidbody2D>();
+        _rigidbody = GetComponent<Rigidbody2D>();
         _pivot = transform.GetChild(0);
         _animator = GetComponentInChildren<Animator>();
-        
+
     }
 
     private void Update()
     {
         if (!_isReady) return;
 
-        if (!_hasArrived)
-        {
-            MoveToTarget();
-            return;
-        }
+        if (!_hasArrived) return;
 
         _currentDelay += Time.deltaTime;
         //¿©±â ÆøÅº ¾Ö´Ï¸ÞÀÌ¼Ç
         if (_currentDelay >= _explosiveRangeWeapon.ExplosionDelay)
-        {
             Explode();
-        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (!_isReady || _hasArrived) return;
+
+        MoveToTarget();
     }
 
     public void Init(Vector2 targetPosition, ExplosiveRangeWeapon rangeWeapon, ProjectileManager projectileManager)
@@ -76,10 +78,9 @@ public class ExplosiveProjectileController : MonoBehaviour
         if (Vector2.Distance(currentPosition, _targetPosition) <= moveDistance)
         {
             ArriveAtTarget();
-            
+
             return;
         }
-
         _rigidbody.velocity = _direction * _explosiveRangeWeapon.AtkSpeed;
     }
 
@@ -103,7 +104,7 @@ public class ExplosiveProjectileController : MonoBehaviour
                 }
             }
         }
-
+        if (explosiveSoundClip != null) SoundManager.PlayClip(explosiveSoundClip);
         _projectileManager.CreateImpactParticleAtPosition(transform.position, _explosiveRangeWeapon);
         Destroy(gameObject);
     }

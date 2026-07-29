@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 360
+  explosiveSoundClip: {fileID: 8300000, guid: 07782d32ef739064b940aff43216ccad, type: 3}
 --- !u!1 &2493222765833717963
 GameObject:
   m_ObjectHideFlags: 0

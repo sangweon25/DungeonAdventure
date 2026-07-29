@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _delay: 1
   _weaponSize: 0.8
-  _atkPower: 1
+  _atkPower: 0.1
   _atkSpeed: 1
   _atkRange: 1.2
   target:
@@ -56,6 +56,7 @@ MonoBehaviour:
   _isOnKnockback: 0
   _knockbackPower: 0.1
   _knockbackTIme: 0.5
+  attackSoundClip: {fileID: 8300000, guid: ef12e5439dd2d584cafdf5507fd64b70, type: 3}
   collideBoxSize: {x: 1, y: 1}
 --- !u!1 &8365171596852745483
 GameObject:

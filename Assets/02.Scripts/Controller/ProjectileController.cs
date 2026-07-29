@@ -22,7 +22,7 @@ public class ProjectileController : MonoBehaviour
     private void Awake()
     {
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        _rigidbody = GetComponentInChildren<Rigidbody2D>();
+        _rigidbody = GetComponent<Rigidbody2D>();
         _pivot = transform.GetChild(0);
     }
 
