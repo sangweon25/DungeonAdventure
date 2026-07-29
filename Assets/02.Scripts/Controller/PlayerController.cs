@@ -4,12 +4,14 @@ using UnityEngine.InputSystem;
 public class PlayerController : BaseController
 {
     private Camera _camera;
+    private GameManager _gameManager;
 
-    protected override void Start()
+    public void Init(GameManager gameManager)
     {
-        base.Start();
+        this._gameManager = gameManager;
         _camera = Camera.main;
     }
+
     public void OnMove(InputAction.CallbackContext context)
     {
         movementDirection = context.ReadValue<Vector2>();
