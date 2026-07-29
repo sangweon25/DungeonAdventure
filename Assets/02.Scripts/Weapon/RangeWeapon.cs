@@ -43,31 +43,54 @@ public class RangeWeapon : WeaponHandler
     {
         base.Attack();
 
-        float projectileAngleSpace = MultipleProjectileAngle;
         int projectileNumPerShot = ProjectileNumPerShot;
         //발사 시작 각도 (인덱스 0 ~ 1 사이 각)
-        float startAngle = -((projectileNumPerShot - 1) * projectileAngleSpace) / 2f;
-
+        float startAngle = CalculateStartAngle(projectileNumPerShot);
         for (int i = 0; i < projectileNumPerShot; i++)
         {
-            float angle = startAngle + projectileAngleSpace * i;
+            float angle = CalculateProjectileAngle(startAngle, i);
 
-            angle += Random.Range(-_spread, _spread);
-
-            CreateProjectile(
-                Controller.LookDirection,
-                angle);
+            FireProjectile(angle);
         }
     }
-
-    private void CreateProjectile(Vector2 lookDir, float angle)
+    /// <summary>
+    /// 첫 번째 발사체 시작 각도 계산
+    /// n개의 발사체를 균등하게 퍼지도록 
+    /// </summary>
+    /// <param name="projectileCount">발사체 갯수</param>
+    /// <returns></returns>
+    private float CalculateStartAngle(int projectileCount)
     {
-        _projectileManager.ShootBullet(
-            this,
-            _projectileSpawnPos.position,
-            RotateVector2(lookDir, angle));
+        return -((projectileCount - 1) * MultipleProjectileAngle) / 2f;
     }
 
+    /// <summary>
+    /// 발사체 기본 각도와 무작위 탄퍼짐 각도 계산
+    /// </summary>
+    /// <param name="startAngle"></param>
+    /// <param name="index"> pershot index</param>
+    /// <returns></returns>
+    private float CalculateProjectileAngle(float startAngle, int index)
+    {
+        float angle = startAngle + MultipleProjectileAngle * index;
+        angle += Random.Range(-Spread, Spread);
+
+        return angle;
+    }
+
+    protected virtual void FireProjectile(float angle)
+    {
+        Vector2 direction = RotateVector2(Controller.LookDirection, angle);
+
+        _projectileManager.ShootBullet(this, _projectileSpawnPos.position, direction);
+    }
+
+    /// <summary>
+    /// Vector2를 degree만큼 회전
+    /// </summary>
+    /// <param name="vec"></param>
+    /// <param name="degree"></param>
+    /// <returns></returns>
     protected static Vector2 RotateVector2(Vector2 vec, float degree)
     {
         return Quaternion.Euler(0, 0, degree) * vec;

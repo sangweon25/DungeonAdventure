@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ExplosiveProjectileController : MonoBehaviour
 {
-    private ExplosiveRangeWeapon _rangeWeapon;
+    private ExplosiveRangeWeapon _explosiveRangeWeapon;
     private ProjectileManager _projectileManager;
     private Rigidbody2D _rigidbody;
     private SpriteRenderer _spriteRenderer;
@@ -14,11 +14,17 @@ public class ExplosiveProjectileController : MonoBehaviour
     private bool _isReady;
     private bool _hasArrived;
 
+    private Animator _animator;
+
+    [SerializeField] private float rotationSpeed = 360f;
+
     private void Awake()
     {
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         _rigidbody = GetComponentInChildren<Rigidbody2D>();
         _pivot = transform.GetChild(0);
+        _animator = GetComponentInChildren<Animator>();
+        
     }
 
     private void Update()
@@ -32,7 +38,8 @@ public class ExplosiveProjectileController : MonoBehaviour
         }
 
         _currentDelay += Time.deltaTime;
-        if (_currentDelay >= _rangeWeapon.ExplosionDelay)
+        //¿©±â ÆøÅº ¾Ö´Ï¸ÞÀÌ¼Ç
+        if (_currentDelay >= _explosiveRangeWeapon.ExplosionDelay)
         {
             Explode();
         }
@@ -40,7 +47,7 @@ public class ExplosiveProjectileController : MonoBehaviour
 
     public void Init(Vector2 targetPosition, ExplosiveRangeWeapon rangeWeapon, ProjectileManager projectileManager)
     {
-        _rangeWeapon = rangeWeapon;
+        _explosiveRangeWeapon = rangeWeapon;
         _projectileManager = projectileManager;
         _targetPosition = targetPosition;
         _direction = (_targetPosition - (Vector2)transform.position).normalized;
@@ -57,46 +64,55 @@ public class ExplosiveProjectileController : MonoBehaviour
             _pivot.localRotation = Quaternion.Euler(0, 0, 0);
 
         _isReady = true;
+        _animator.speed = 1.0f / _explosiveRangeWeapon.ExplosionDelay;
     }
 
     private void MoveToTarget()
     {
         Vector2 currentPosition = transform.position;
-        float moveDistance = _rangeWeapon.AtkSpeed * Time.deltaTime;
+        float moveDistance = _explosiveRangeWeapon.AtkSpeed * Time.deltaTime;
+        transform.Rotate(0f, 0f, rotationSpeed * Time.deltaTime);
 
         if (Vector2.Distance(currentPosition, _targetPosition) <= moveDistance)
         {
-            transform.position = _targetPosition;
-            _rigidbody.velocity = Vector2.zero;
-            _hasArrived = true;
+            ArriveAtTarget();
+            
             return;
         }
 
-        _rigidbody.velocity = _direction * _rangeWeapon.AtkSpeed;
+        _rigidbody.velocity = _direction * _explosiveRangeWeapon.AtkSpeed;
     }
 
     private void Explode()
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _rangeWeapon.ExplosionRadius, _rangeWeapon.target);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _explosiveRangeWeapon.ExplosionRadius, _explosiveRangeWeapon.target);
 
         foreach (Collider2D hit in hits)
         {
             ResourceController resourceController = hit.GetComponent<ResourceController>();
             if (resourceController == null) continue;
 
-            resourceController.ChangeHealth(-_rangeWeapon.AtkPower);
+            resourceController.ChangeHealth(-_explosiveRangeWeapon.AtkPower);
 
-            if (_rangeWeapon.IsOnKnockback)
+            if (_explosiveRangeWeapon.IsOnKnockback)
             {
                 BaseController baseController = hit.GetComponent<BaseController>();
                 if (baseController != null)
                 {
-                    baseController.ApplyKnockback(transform, _rangeWeapon.KnockbackPower, _rangeWeapon.KnockbackTime);
+                    baseController.ApplyKnockback(transform, _explosiveRangeWeapon.KnockbackPower, _explosiveRangeWeapon.KnockbackTime);
                 }
             }
         }
 
-        _projectileManager.CreateImpactParticleAtPosition(transform.position, _rangeWeapon);
+        _projectileManager.CreateImpactParticleAtPosition(transform.position, _explosiveRangeWeapon);
         Destroy(gameObject);
+    }
+
+    private void ArriveAtTarget()
+    {
+        transform.position = _targetPosition;
+        _rigidbody.velocity = Vector2.zero;
+        _hasArrived = true;
+        _animator.SetTrigger("Fuse");
     }
 }

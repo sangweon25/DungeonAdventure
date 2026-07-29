@@ -184,24 +184,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _delay: 3
-  _weaponSize: 0.7
+  _weaponSize: 1.5
   _atkPower: 0.1
   _atkSpeed: 3
   _atkRange: 15
   target:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 192
   _isOnKnockback: 1
   _knockbackPower: 2
   _knockbackTIme: 0.3
   _projectileSpawnPos: {fileID: 8312609564211857007}
   _bulletIndex: 1
-  _bulletSize: 0.7
+  _bulletSize: 1
   _duration: 10
   _spread: 1
   _projectiledNumPerShot: 1
   _multipleProjectileAngle: 1
   _projectileColor: {r: 1, g: 1, b: 1, a: 1}
-  _targetRandomRect: {x: 1, y: 1}
-  _explosionDelay: 1
+  _targetPoint: {x: 1, y: 1}
+  _explosionDelay: 1.5
   _explosionRadius: 2

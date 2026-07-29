@@ -12,29 +12,21 @@ public class ExplosiveRangeWeapon : RangeWeapon
     [SerializeField] private float _explosionRadius = 2f;
     public float ExplosionRadius => _explosionRadius;
 
-    public override void Attack()
+    protected override void FireProjectile(float angle)
     {
-        AttackAnimation();
+        Vector2 startPosition = ProjectileSpawnPos.position;
+        Vector2 targetPoint = GetTargetPoint();
 
-        int projectileNumPerShot = ProjectileNumPerShot;
-        float projectileAngleSpace = MultipleProjectileAngle;
-        float startAngle = -((projectileNumPerShot - 1) * projectileAngleSpace) / 2f;
-
-        for (int i = 0; i < projectileNumPerShot; i++)
-        {
-            Vector2 targetPosition = GetTargetPosition();
-            float angle = startAngle + projectileAngleSpace * i;
-            angle += Random.Range(-Spread, Spread);
-
-            Vector2 startPosition = ProjectileSpawnPos.position;
-            Vector2 direction = (targetPosition - startPosition).normalized;
-            Vector2 adjustedTargetPosition = startPosition + RotateVector2(direction, angle) * Vector2.Distance(startPosition, targetPosition);
-
-            ProjectileManagerInstance.ShootExplosive(this, startPosition, adjustedTargetPosition);
-        }
+        Vector2 direction = (targetPoint - startPosition).normalized;
+        Vector2 targetPosition = startPosition + RotateVector2(direction, angle) * Vector2.Distance(startPosition, targetPoint);
+        ProjectileManagerInstance.ShootExplosive(this, startPosition, targetPosition);
     }
 
-    private Vector2 GetTargetPosition()
+    /// <summary>
+    /// 폭발형 발사체 목표 위치 계산
+    /// </summary>
+    /// <returns></returns>
+    private Vector2 GetTargetPoint()
     {
         Vector2 targetPosition = (Vector2)transform.position + Controller.LookDirection * AtkRange;
 

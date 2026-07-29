@@ -15,24 +15,27 @@ public class ProjectileManager : MonoBehaviour
         _instance = this;
     }
 
-    public void ShootBullet(RangeWeapon rangeWeapon, Vector2 startPos, Vector2 dir)
+    public void ShootBullet(RangeWeapon rangeWeapon, Vector2 startposition, Vector2 dir)
     {
-        GameObject prefab = _projectilePrefabs[rangeWeapon.BulletIndex];
-        GameObject obj = Instantiate(prefab,startPos,Quaternion.identity);
-
-        ProjectileController projectileController = obj.GetComponent<ProjectileController>();
-        projectileController.Init(dir, rangeWeapon,this);
-
+        GameObject prefab = CreateProjectile(rangeWeapon.BulletIndex, startposition);
+        ProjectileController controller = prefab.GetComponent<ProjectileController>();
+        controller.Init(dir, rangeWeapon,this);
     }
 
-    public void ShootExplosive(ExplosiveRangeWeapon rangeWeapon, Vector2 startPos, Vector2 targetPos)
+    public void ShootExplosive(ExplosiveRangeWeapon rangeWeapon, Vector2 startPosition, Vector2 targetPosition)
     {
-        GameObject prefab = _projectilePrefabs[rangeWeapon.BulletIndex];
-        GameObject obj = Instantiate(prefab, startPos, Quaternion.identity);
-
-        ExplosiveProjectileController projectileController = obj.GetComponent<ExplosiveProjectileController>();
-        projectileController.Init(targetPos, rangeWeapon, this);
+        GameObject prefab = CreateProjectile(rangeWeapon.BulletIndex, startPosition);
+        ExplosiveProjectileController controller = prefab.GetComponent<ExplosiveProjectileController>();
+        controller.Init(targetPosition, rangeWeapon, this);
     }
+    
+    private GameObject CreateProjectile(int bulletIndex,Vector2 startPosition)
+    {
+        GameObject prefab = _projectilePrefabs[bulletIndex];
+
+        return Instantiate(prefab, startPosition, Quaternion.identity);
+    }
+
     public void CreateImpactParticleAtPosition(Vector3 pos,RangeWeapon rangeWeapon)
     {
         _impactParticleSystem.transform.position = pos;
