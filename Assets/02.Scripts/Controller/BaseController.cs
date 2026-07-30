@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class BaseController : MonoBehaviour
@@ -23,6 +24,14 @@ public class BaseController : MonoBehaviour
     [SerializeField] private WeaponHandler _weaponPrefab;
     protected bool isAttacking;
     private float timeSinceLastAttack = float.MaxValue;
+
+    [Header("Dash")]
+    [SerializeField] private float _dashSpeed = 15f;
+    [SerializeField] private float _dashDuration = 0.15f;
+    [SerializeField] private float _dashCooldown = 0.5f;
+
+    private bool _isDashing;
+    private bool _canDash = true;
 
     protected virtual void Awake()
     {
@@ -54,6 +63,7 @@ public class BaseController : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
+        if (_isDashing) return;
         Movement(movementDirection);
         if (_knockbackDuration > 0f) _knockbackDuration -= Time.fixedDeltaTime;
     }
@@ -122,6 +132,39 @@ public class BaseController : MonoBehaviour
         {
             weaponHandler.Attack();
         }
+    }
+
+    protected void Dash()
+    {
+        if (!_canDash || _isDashing || rigidbody2D == null) return;
+
+        Vector2 dashDir = movementDirection;
+        //입력이 없으면 lookDirection 방향을 dash방향으로
+        if (dashDir.sqrMagnitude <= Mathf.Epsilon)
+        {
+            dashDir = lookDirection;
+        }
+        //바라보는 방향도 없을 경우 dash x 
+        if (dashDir.sqrMagnitude <= Mathf.Epsilon) return;
+
+        StartCoroutine(DashRoutine(dashDir.normalized));
+    }
+
+    private IEnumerator DashRoutine(Vector2 dashDir)
+    {
+        _canDash = false;
+        _isDashing = true;
+
+        rigidbody2D.velocity = dashDir * _dashSpeed;
+
+        yield return new WaitForSeconds(_dashDuration);
+
+        _isDashing = false;
+        rigidbody2D.velocity = Vector2.zero;
+
+        yield return new WaitForSeconds(_dashCooldown);
+
+        _canDash = true;
     }
 
     public virtual void Death()

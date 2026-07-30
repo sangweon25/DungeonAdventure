@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class PlayerController : BaseController
@@ -40,6 +41,12 @@ public class PlayerController : BaseController
             isAttacking = true;
         else if(context.canceled)
             isAttacking = false;
+    }
+    public void OnDash(InputAction.CallbackContext context)
+    {
+        if (!context.performed) return;
+
+        Dash();
     }
 
     public override void Death()
