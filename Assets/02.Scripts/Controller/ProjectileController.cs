@@ -1,7 +1,8 @@
+using System;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class ProjectileController : MonoBehaviour
+public class ProjectileController : MonoBehaviour , IPoolable
 {
     [SerializeField] private LayerMask _levelCollisionLayer;
 
@@ -18,6 +19,8 @@ public class ProjectileController : MonoBehaviour
     public bool fxOnDestroy = true;
 
     private ProjectileManager _projectileManager;
+
+    private Action<GameObject> returnToPool;
 
     private void Awake()
     {
@@ -92,6 +95,21 @@ public class ProjectileController : MonoBehaviour
         {
             _projectileManager.CreateImpactParticleAtPosition(position, _rangeWeapon);
         }
-        Destroy(this.gameObject);
+        OnDeSpawn();
+    }
+
+    public void Initialize(Action<GameObject> returnAction)
+    {
+        returnToPool = returnAction;
+    }
+
+    public void OnSpawn()
+    {
+
+    }
+
+    public void OnDeSpawn()
+    {
+        returnToPool?.Invoke(gameObject);
     }
 }

@@ -10,21 +10,29 @@ public class ProjectileManager : MonoBehaviour
 
     [SerializeField] private ParticleSystem _impactParticleSystem;
 
+    private ObjectPoolManager _poolManager;
+
     private void Awake()
     {
         _instance = this;
     }
-
-    public void ShootBullet(RangeWeapon rangeWeapon, Vector2 startposition, Vector2 dir)
+    private void Start()
     {
-        GameObject prefab = CreateProjectile(rangeWeapon.BulletIndex, startposition);
+        _poolManager = ObjectPoolManager.Instance;
+    }
+
+    public void ShootBullet(RangeWeapon rangeWeapon, Vector2 startPosition, Vector2 dir)
+    {
+        GameObject prefab = _poolManager.GetObject(rangeWeapon.BulletIndex, startPosition, Quaternion.identity);
+
         ProjectileController controller = prefab.GetComponent<ProjectileController>();
         controller.Init(dir, rangeWeapon,this);
     }
 
     public void ShootExplosive(ExplosiveRangeWeapon rangeWeapon, Vector2 startPosition, Vector2 targetPosition)
     {
-        GameObject prefab = CreateProjectile(rangeWeapon.BulletIndex, startPosition);
+        GameObject prefab = _poolManager.GetObject(rangeWeapon.BulletIndex, startPosition, Quaternion.identity);
+
         ExplosiveProjectileController controller = prefab.GetComponent<ExplosiveProjectileController>();
         controller.Init(targetPosition, rangeWeapon, this);
     }

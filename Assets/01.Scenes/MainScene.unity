@@ -18466,6 +18466,7 @@ GameObject:
   m_Component:
   - component: {fileID: 983073606}
   - component: {fileID: 983073607}
+  - component: {fileID: 983073608}
   m_Layer: 0
   m_Name: ProjectileManager
   m_TagString: Untagged
@@ -18505,6 +18506,22 @@ MonoBehaviour:
   - {fileID: 1966033678148965262, guid: cb80effec88a7a64787ef56b7491fc0c, type: 3}
   - {fileID: 1966033678148965262, guid: 730881634fae06a40b35476b21caf609, type: 3}
   _impactParticleSystem: {fileID: 849005131}
+--- !u!114 &983073608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983073605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af741535ac9cd46448f389e980b51127, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabs:
+  - {fileID: 1966033678148965262, guid: cb80effec88a7a64787ef56b7491fc0c, type: 3}
+  - {fileID: 1966033678148965262, guid: 730881634fae06a40b35476b21caf609, type: 3}
+  - {fileID: 1416953985387644, guid: 2deef3641bcdd16468a01ae61ce3c386, type: 3}
 --- !u!1 &1132205662
 GameObject:
   m_ObjectHideFlags: 0

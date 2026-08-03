@@ -1,3 +1,5 @@
+using System;
+using UnityEditor.EditorTools;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour
@@ -12,6 +14,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip musicClip;
 
     public SoundSource soundSourcePrefab;
+    private ObjectPoolManager _poolManager;
 
     private void Awake()
     {
@@ -23,6 +26,7 @@ public class SoundManager : MonoBehaviour
 
     private void Start()
     {
+        _poolManager = ObjectPoolManager.Instance;
         ChangeBackGroundMusic(musicClip);
     }
 
@@ -35,8 +39,10 @@ public class SoundManager : MonoBehaviour
 
     public static void PlayClip(AudioClip clip)
     {
-        SoundSource obj = Instantiate(instance.soundSourcePrefab);
+        GameObject obj = instance._poolManager.GetObject(2, new Vector3(), Quaternion.identity);
+
         SoundSource soundSource = obj.GetComponent<SoundSource>();
         soundSource.Play(clip, instance._soundEffectVol, instance._soundEffectPitchVariance);
     }
+
 }
